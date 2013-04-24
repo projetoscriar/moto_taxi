@@ -13,37 +13,34 @@
                 background: #666666;
                 padding: 0px;                
             }
-
             .details-page {
                 width: 100%;
                 height: 100%;
             }
-
             #map_content {
                 padding: 0px;
                 width: 100%;
                 height: 100%;
                 overflow: hidden;                
             }
-
             #map_canvas {
                 width: 100%;
-                height: 100%;
-                padding: 0;
+                height: 90%;
+                padding: 0px;
                 text-shadow: none;
-            }
+            }           
         </style>
     </head>    
     <body>      
         <div id="details" data-role="page" class="details-page">
-            <div data-role="header" data-position="fixed">
+            <div data-role="header" data-position="fixed" style="">
                 <h1>Moto Taxi - Novo Trajeto</h1>
                 <a href="menu.html" data-icon="home" class="ui-btn-right" data-ajax="false">Home</a>
             </div>
             <div data-role="content" id="map_content" data-theme="a">
                 <div id="map_canvas"></div>
             </div>
-            <!--<div data-role="footer" data-position="">
+            <!--<div data-role="footer" data-position="fixed" class="classFooter">
                 <h1>GRUPO CRIAR</h1>
             </div>-->
         </div>
@@ -57,8 +54,8 @@
             function initialize() {
                 setupMap(-43.60132, 172.11984, 11, true);
                 var quakeEventLatlng = new google.maps.LatLng(-43.601, 172.12);
-                var marker = createQuakeEventMarker(quakeEventLatlng)
-                marker.setAnimation(google.maps.Animation.DROP)
+                var marker = createQuakeEventMarker(quakeEventLatlng);
+                marker.setAnimation(google.maps.Animation.DROP);
             }
 
             // Initialize the map when the jQuery Mobile pageshow event is triggered 

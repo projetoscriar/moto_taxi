@@ -22,24 +22,27 @@ function successCB() {
     alert("success!");
 }
 
-function validaLogin(usuario, senha) {
-    var c = 'SELECT * FROM usuarios WHERE usuario="' + usuario + '" AND senha="' + senha + '"';
-    var retorno = false;
-    db.transaction(function(e) {
-        e.executeSql(c, [],
-                function(g, f) {
-                    if (f.rows.length != 0) {
-                         _constant.redirect('menu.html');
-                    } else {
-                        alert("Informe login");
-                    }
-                });
-    });
-
-    return retorno;
-}
 
 $(document).on('pageinit', function() {
+
+    function validaLogin(usuario, senha) {
+        var c = 'SELECT * FROM usuarios WHERE usuario="' + usuario + '" AND senha="' + senha + '"';
+        var retorno = false;
+        db.transaction(function(e) {
+            e.executeSql(c, [],
+                    function(g, f) {
+                        if (f.rows.length != 0) {
+                            _constant.redirect('menu.html');
+                        } else {
+                            alert("Informe login");
+                        }
+                    });
+        });
+
+        return retorno;
+    }
+
+
     $('.bt_logar').click(function(e) {
         $('#dialogPage').popup();
         if ($('#usuario').val() == '') {

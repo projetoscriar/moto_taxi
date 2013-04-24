@@ -13,6 +13,13 @@ and open the template in the editor.
         <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script> 
         <script src="http://code.jquery.com/mobile/1.3.0/jquery.mobile-1.3.0.min.js"></script> 
         <script src="themes/js/config.js"></script>
+        <script>
+            if (window.openDatabase) {
+                db = window.openDatabase("taxi", "", "TAXI", 5 * 1000 * 1000);
+            } else {
+                jAviso("Navegador sem suporte ao banco de dados SqLite.");
+            }
+        </script>
     </head>
     <body>
         <div id="menu" data-role="page" class="">

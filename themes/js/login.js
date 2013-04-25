@@ -4,14 +4,14 @@ function debug(a, b) {
 
 function populateDB() {
     db.transaction(function(e) {
-        var c = 'DROP TABLE IF EXISTS usuarios';
+        /*var c = 'DROP TABLE IF EXISTS usuarios';
         e.executeSql(c, [],
                 function(f, e) {
                     debug("QUERY", 'DROP TABLE IF EXISTS usuarios');
                 },
                 function(f, e) {
                     debug("ERROR", e.message);
-                });
+                });*/
 
         e.executeSql('CREATE TABLE IF NOT EXISTS usuarios ("id" INTEGER , "usuario" VARCHAR(50), "senha" VARCHAR(50))');
         e.executeSql('INSERT INTO usuarios ("id", "usuario", "senha") VALUES ("1", "a" , "123")');

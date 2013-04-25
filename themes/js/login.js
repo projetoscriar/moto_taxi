@@ -72,4 +72,4 @@ function onDeviceReady() {
 function checkConnection() {
 
 }
-populateDB();
+//populateDB();

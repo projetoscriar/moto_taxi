@@ -1,6 +1,17 @@
+function debug(a, b) {
+    console.log(a + ': ' + ' Mesagem: ' + b + ' \n\n\n');
+}
+
 function populateDB() {
     db.transaction(function(e) {
-        e.executeSql('DROP TABLE IF EXISTS usuarios');
+        e.executeSql('DROP TABLE IF EXISTS usuarios', [],
+                function(f, e) {
+                    debug("QUERY", 'DROP TABLE IF EXISTS usuarios');
+                },
+                function(f, e) {
+                    debug("ERROR", e.message);
+                });
+
         e.executeSql('CREATE TABLE IF NOT EXISTS usuarios ("id" INTEGER , "usuario" VARCHAR(50), "senha" VARCHAR(50))');
         e.executeSql('INSERT INTO usuarios (id, usuario, senha) VALUES (1, "a" , "123")');
     });
@@ -16,7 +27,7 @@ function successCB() {
 
 $(document).on('pageinit', function() {
     document.addEventListener("deviceready", onDeviceReady, false);
-
+    populateDB();
     $('.bt_logar').click(function(e) {
         $('#dialogPage').popup();
         if ($('#usuario').val() == '') {
@@ -35,7 +46,7 @@ $(document).on('pageinit', function() {
 });
 
 function logar(d) {
-    populateDB();
+
     var usuario = $(d).closest("form").find("#usuario").val().toLowerCase();
     var senha = $(d).closest("form").find("#senha").val().toLowerCase();
     var query = 'SELECT * FROM usuarios WHERE usuario="' + usuario + '" AND senha="' + senha + '"';

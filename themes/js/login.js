@@ -1,11 +1,3 @@
-var db = null;
-if (window.openDatabase) {
-    db = window.openDatabase("taxi", "", "TAXI", 5 * 1000 * 1000);
-    populateDB();
-} else {
-    jAviso("Navegador sem suporte ao banco de dados SqLite.");
-}
-
 function populateDB() {
     db.transaction(function(e) {
         e.executeSql('DROP TABLE IF EXISTS usuarios');
@@ -22,27 +14,28 @@ function successCB() {
     alert("success!");
 }
 
+function logar(d) {
+    var usuario = $(d).closest("form").find("#usuario").val().toLowerCase();
+    var senha = $(d).closest("form").find("#senha").val().toLowerCase();
+    var query = 'SELECT * FROM usuarios WHERE usuario="' + usuario + '" AND senha="' + senha + '"';
+    var retorno = false;
+    
+    db.transaction(function(e) {
+        e.executeSql(query, [],
+                function(g, f) {
+                    if (f.rows.length != 0) {
+                        _constant.redirect('menu.html');
+                    } else {
+                        alert("Informe login");
+                    }
+                });
+    });
+
+}
 
 $(document).on('pageinit', function() {
-
-    function validaLogin(usuario, senha) {
-        var c = 'SELECT * FROM usuarios WHERE usuario="' + usuario + '" AND senha="' + senha + '"';
-        var retorno = false;
-        db.transaction(function(e) {
-            e.executeSql(c, [],
-                    function(g, f) {
-                        if (f.rows.length != 0) {
-                            _constant.redirect('menu.html');
-                        } else {
-                            alert("Informe login");
-                        }
-                    });
-        });
-
-        return retorno;
-    }
-
-
+    document.addEventListener("deviceready", onDeviceReady, false);
+    
     $('.bt_logar').click(function(e) {
         $('#dialogPage').popup();
         if ($('#usuario').val() == '') {
@@ -54,12 +47,16 @@ $(document).on('pageinit', function() {
             $('#dialogPage').popup("open", {positionTo: '#senha'});
             $('#senha').focus();
         } else {
-            validaLogin($('#usuario').val(), $('#senha').val());
+            logar(this);
         }
     });
-    //document.addEventListener("deviceready", onDeviceReady, false);    
-    //onDeviceReady();
+ 
 });
 
+function onDeviceReady() {
+    checkConnection();
+}
 
-
+function checkConnection() {
+    
+}

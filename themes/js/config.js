@@ -10,6 +10,13 @@ var _constant = {
     }
 };
 
+var db = null;
+if (window.openDatabase) {
+    db = window.openDatabase("taxi", "", "TAXI", 5 * 1000 * 1000);  
+} else {
+    //jAviso("Navegador sem suporte ao banco de dados SqLite.");
+}
+
 $(document).bind("mobileinit", function() {
     $.extend($.mobile, {
         ajaxEnabled: false,

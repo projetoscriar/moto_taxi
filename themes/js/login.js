@@ -30,11 +30,11 @@ function logar(d) {
                     if (f.rows.length != 0) {
                         _constant.redirect('menu.html');
                     } else {
-                        
+
                     }
                 },
-                function( g, f ) {
-                   verifica_tabelas();
+                function(g, f) {
+                    verifica_tabelas();
                 });
     });
 
@@ -82,20 +82,21 @@ function verifica_tabelas() {
         e.executeSql(c, [],
                 function(g, f) {
                     /*debug("QUERY", c);
-                    debug("TOTAL", f.rows.length);*/
+                     debug("TOTAL", f.rows.length);*/
                     if (f.rows.length != 0) {
                         /*debug("SUCESSO", 'Redirecionando para o login.');
-                        _configuracoes.verifica_usuarios();*/
-                          _constant.redirect('index.html');
+                         _configuracoes.verifica_usuarios();*/
+                        _constant.redirect('index.html');
                     } else {
-                       populateDB();
+                        alert(f.message);
+                        populateDB();
                     }
                 },
                 function(g, f) {
                     alert(f.message);
                     /*debug("QUERY", c);
-                    debug("ERROR", f.message);
-                    _configuracoes.verifica_tabelas();*/
+                     debug("ERROR", f.message);
+                     _configuracoes.verifica_tabelas();*/
                 });
     });
 }

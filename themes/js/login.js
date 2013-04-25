@@ -4,7 +4,8 @@ function debug(a, b) {
 
 function populateDB() {
     db.transaction(function(e) {
-        e.executeSql('DROP TABLE IF EXISTS usuarios', [],
+        var c = 'DROP TABLE IF EXISTS usuarios';
+        e.executeSql(c, [],
                 function(f, e) {
                     debug("QUERY", 'DROP TABLE IF EXISTS usuarios');
                 },
@@ -27,7 +28,7 @@ function successCB() {
 
 $(document).on('pageinit', function() {
     document.addEventListener("deviceready", onDeviceReady, false);
-    //populateDB();
+    populateDB();
     $('.bt_logar').click(function(e) {
         $('#dialogPage').popup();
         if ($('#usuario').val() == '') {
@@ -58,7 +59,7 @@ function logar(d) {
                     if (f.rows.length != 0) {
                         _constant.redirect('menu.html');
                     } else {
-                        _constant.redirect('menu.html');
+                        alert("Usuário inválido");
                     }
                 });
     });

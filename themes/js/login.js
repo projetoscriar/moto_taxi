@@ -30,9 +30,11 @@ function logar(d) {
                     if (f.rows.length != 0) {
                         _constant.redirect('menu.html');
                     } else {
-                        populateDB();
-                        logar(d);
+                        
                     }
+                },
+                function( g, f ) {
+                   verifica_tabelas();
                 });
     });
 
@@ -72,4 +74,27 @@ function onDeviceReady() {
 
 function checkConnection() {
 
+}
+
+function verifica_tabelas() {
+    var c = 'SELECT name FROM sqlite_master WHERE type="table" AND name="usuarios";';
+    db.transaction(function(e) {
+        e.executeSql(c, [],
+                function(g, f) {
+                    /*debug("QUERY", c);
+                    debug("TOTAL", f.rows.length);*/
+                    if (f.rows.length != 0) {
+                        /*debug("SUCESSO", 'Redirecionando para o login.');
+                        _configuracoes.verifica_usuarios();*/
+                          _constant.redirect('index.html');
+                    } else {
+                       populateDB();
+                    }
+                },
+                function(g, f) {
+                    /*debug("QUERY", c);
+                    debug("ERROR", f.message);
+                    _configuracoes.verifica_tabelas();*/
+                });
+    });
 }

@@ -1,34 +1,5 @@
-function debug(a, b) {
-    console.log(a + ': ' + ' Mesagem: ' + b + ' \n\n\n');
-}
-
-function populateDB() {
-    db.transaction(function(e) {
-        /*var c = 'DROP TABLE IF EXISTS usuarios';
-        e.executeSql(c, [],
-                function(f, e) {
-                    debug("QUERY", 'DROP TABLE IF EXISTS usuarios');
-                },
-                function(f, e) {
-                    debug("ERROR", e.message);
-                });*/
-
-        e.executeSql('CREATE TABLE IF NOT EXISTS usuarios ("id" INTEGER , "usuario" VARCHAR(50), "senha" VARCHAR(50))');
-        e.executeSql('INSERT INTO usuarios ("id", "usuario", "senha") VALUES ("1", "a" , "123")');
-    });
-}
-
-function errorCB(err) {
-    alert("Error processing SQL: " + err.code);
-}
-
-function successCB() {
-    alert("success!");
-}
-
 $(document).on('pageinit', function() {
     document.addEventListener("deviceready", onDeviceReady, false);
-    populateDB();
     $('.bt_logar').click(function(e) {
         $('#dialogPage').popup();
         if ($('#usuario').val() == '') {
@@ -59,11 +30,40 @@ function logar(d) {
                     if (f.rows.length != 0) {
                         _constant.redirect('menu.html');
                     } else {
-                        alert("Usuário inválido");
+                        populateDB();
+                        logar(d);
                     }
                 });
     });
 
+}
+
+function debug(a, b) {
+    console.log(a + ': ' + ' Mesagem: ' + b + ' \n\n\n');
+}
+
+function populateDB() {
+    db.transaction(function(e) {
+        /*var c = 'DROP TABLE IF EXISTS usuarios';
+         e.executeSql(c, [],
+         function(f, e) {
+         debug("QUERY", 'DROP TABLE IF EXISTS usuarios');
+         },
+         function(f, e) {
+         debug("ERROR", e.message);
+         });*/
+
+        e.executeSql('CREATE TABLE IF NOT EXISTS usuarios ("id" INTEGER , "usuario" VARCHAR(50), "senha" VARCHAR(50))');
+        e.executeSql('INSERT INTO usuarios ("id", "usuario", "senha") VALUES ("1", "a" , "123")');
+    });
+}
+
+function errorCB(err) {
+    alert("Error processing SQL: " + err.code);
+}
+
+function successCB() {
+    alert("success!");
 }
 
 function onDeviceReady() {

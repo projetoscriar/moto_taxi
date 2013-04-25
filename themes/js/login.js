@@ -7,14 +7,14 @@ function populateDB() {
         var c = 'DROP TABLE IF EXISTS usuarios';
         e.executeSql(c, [],
                 function(f, e) {
-                    //debug("QUERY", 'DROP TABLE IF EXISTS usuarios');
+                    debug("QUERY", 'DROP TABLE IF EXISTS usuarios');
                 },
                 function(f, e) {
-                    //debug("ERROR", e.message);
+                    debug("ERROR", e.message);
                 });
 
         e.executeSql('CREATE TABLE IF NOT EXISTS usuarios ("id" INTEGER , "usuario" VARCHAR(50), "senha" VARCHAR(50))');
-        e.executeSql('INSERT INTO usuarios (id, usuario, senha) VALUES (1, "a" , "123")');
+        e.executeSql('INSERT INTO usuarios ("id", "usuario", "senha") VALUES ("1", "a" , "123")');
     });
 }
 
@@ -27,7 +27,8 @@ function successCB() {
 }
 
 $(document).on('pageinit', function() {
-    document.addEventListener("deviceready", onDeviceReady, false);    
+    document.addEventListener("deviceready", onDeviceReady, false);
+    populateDB();
     $('.bt_logar').click(function(e) {
         $('#dialogPage').popup();
         if ($('#usuario').val() == '') {
@@ -72,4 +73,3 @@ function onDeviceReady() {
 function checkConnection() {
 
 }
-//populateDB();

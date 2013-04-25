@@ -14,6 +14,7 @@ var db = null;
 if (window.openDatabase) {
     db = window.openDatabase("taxi", "", "TAXI", 5 * 1000 * 1000);  
 } else {
+    alert("Nao criou banco");
     //jAviso("Navegador sem suporte ao banco de dados SqLite.");
 }
 

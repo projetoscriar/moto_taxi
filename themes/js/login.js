@@ -27,8 +27,7 @@ function successCB() {
 }
 
 $(document).on('pageinit', function() {
-    document.addEventListener("deviceready", onDeviceReady, false);
-    populateDB();
+    document.addEventListener("deviceready", onDeviceReady, false);    
     $('.bt_logar').click(function(e) {
         $('#dialogPage').popup();
         if ($('#usuario').val() == '') {
@@ -73,3 +72,4 @@ function onDeviceReady() {
 function checkConnection() {
 
 }
+populateDB();

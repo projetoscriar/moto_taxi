@@ -12,6 +12,7 @@ var _constant = {
 
 var db = null;
 if (window.openDatabase) {
+    alert("criou banco");
     db = window.openDatabase("taxi", "", "TAXI", 5 * 1000 * 1000);  
 } else {
     alert("Nao criou banco");

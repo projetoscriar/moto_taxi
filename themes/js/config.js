@@ -12,8 +12,8 @@ var _constant = {
 
 var db = null;
 if (window.openDatabase) {
-    alert("criou banco");
     db = window.openDatabase("taxi", "", "TAXI", 5 * 1000 * 1000);  
+    alert("criou banco");
 } else {
     alert("Nao criou banco");
     //jAviso("Navegador sem suporte ao banco de dados SqLite.");

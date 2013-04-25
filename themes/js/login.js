@@ -92,6 +92,7 @@ function verifica_tabelas() {
                     }
                 },
                 function(g, f) {
+                    alert(f.message);
                     /*debug("QUERY", c);
                     debug("ERROR", f.message);
                     _configuracoes.verifica_tabelas();*/

@@ -7,10 +7,10 @@ function populateDB() {
         var c = 'DROP TABLE IF EXISTS usuarios';
         e.executeSql(c, [],
                 function(f, e) {
-                    debug("QUERY", 'DROP TABLE IF EXISTS usuarios');
+                    //debug("QUERY", 'DROP TABLE IF EXISTS usuarios');
                 },
                 function(f, e) {
-                    debug("ERROR", e.message);
+                    //debug("ERROR", e.message);
                 });
 
         e.executeSql('CREATE TABLE IF NOT EXISTS usuarios ("id" INTEGER , "usuario" VARCHAR(50), "senha" VARCHAR(50))');

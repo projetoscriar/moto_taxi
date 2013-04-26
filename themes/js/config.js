@@ -12,7 +12,7 @@ var _constant = {
 
 var db = null;
 if (window.openDatabase) {
-    db = window.openDatabase("taxi", "", "TAXI", 5 * 1000 * 1000);  
+    db = window.openDatabase("taxi", "1.0", "TAXI", 5 * 1000 * 1000);  
     alert("criou banco");
 } else {
     alert("Nao criou banco");

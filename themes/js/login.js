@@ -11,92 +11,128 @@ $(document).on('pageinit', function() {
             $('#dialogPage').popup("open", {positionTo: '#senha'});
             $('#senha').focus();
         } else {
-            logar(this);
+            _constant.redirect('menu.html');
         }
     });
 
 });
 
-function logar(d) {
+// Wait for PhoneGap to load
+//
+document.addEventListener("deviceready", onDeviceReady, false);
 
-    var usuario = $(d).closest("form").find("#usuario").val().toLowerCase();
-    var senha = $(d).closest("form").find("#senha").val().toLowerCase();
-    var query = 'SELECT * FROM usuarios WHERE usuario="' + usuario + '" AND senha="' + senha + '"';
-    var retorno = false;
-
-    db.transaction(function(e) {
-        e.executeSql(query, [],
-                function(g, f) {
-                    if (f.rows.length != 0) {
-                        _constant.redirect('menu.html');
-                    } else {
-
-                    }
-                },
-                function(g, f) {
-                    verifica_tabelas();
-                });
-    });
-
+// PhoneGap is ready
+//
+function onDeviceReady() {
+    alert("Banco");
+    var db = window.openDatabase("taxi", "1.0", "PhoneGap Demo", 200000);
+    db.transaction(populateDB, errorCB, successCB);
 }
 
-function debug(a, b) {
-    console.log(a + ': ' + ' Mesagem: ' + b + ' \n\n\n');
+// Populate the database 
+//
+function populateDB(tx) {
+    tx.executeSql('CREATE TABLE IF NOT EXISTS usuarios ("id" INTEGER , "usuario" VARCHAR(50), "senha" VARCHAR(50))');
+    tx.executeSql('INSERT INTO usuarios ("id", "usuario", "senha") VALUES ("1", "a" , "123")');
 }
 
-function populateDB() {
-    db.transaction(function(e) {
-        /*var c = 'DROP TABLE IF EXISTS usuarios';
-         e.executeSql(c, [],
-         function(f, e) {
-         debug("QUERY", 'DROP TABLE IF EXISTS usuarios');
-         },
-         function(f, e) {
-         debug("ERROR", e.message);
-         });*/
-
-        e.executeSql('CREATE TABLE IF NOT EXISTS usuarios ("id" INTEGER , "usuario" VARCHAR(50), "senha" VARCHAR(50))');
-        e.executeSql('INSERT INTO usuarios ("id", "usuario", "senha") VALUES ("1", "a" , "123")');
-    });
+// Transaction error callback
+//
+function errorCB(tx, err) {
+    alert("Error processing SQL: " + err);
 }
 
-function errorCB(err) {
-    alert("Error processing SQL: " + err.code);
-}
-
+// Transaction success callback
+//
 function successCB() {
     alert("success!");
 }
 
-function onDeviceReady() {
-    checkConnection();
-}
 
-function checkConnection() {
 
-}
 
-function verifica_tabelas() {
-    var c = 'SELECT name FROM sqlite_master WHERE type="table" AND name="usuarios";';
-    db.transaction(function(e) {
-        e.executeSql(c, [],
-                function(g, f) {
-                    /*debug("QUERY", c);
-                     debug("TOTAL", f.rows.length);*/
-                    if (f.rows.length != 0) {
-                        /*debug("SUCESSO", 'Redirecionando para o login.');
-                         _configuracoes.verifica_usuarios();*/
-                        _constant.redirect('index.html');
-                    } else {
-                        alert(f.message);
-                        populateDB();
-                    }
-                },
-                function(g, f) {
-                    alert(f.message);
-                    /*debug("QUERY", c);
-                     debug("ERROR", f.message);
-                     _configuracoes.verifica_tabelas();*/
-                });
-    });
-}
+/*
+ function logar(d) {
+ 
+ var usuario = $(d).closest("form").find("#usuario").val().toLowerCase();
+ var senha = $(d).closest("form").find("#senha").val().toLowerCase();
+ var query = 'SELECT * FROM usuarios WHERE usuario="' + usuario + '" AND senha="' + senha + '"';
+ var retorno = false;
+ 
+ db.transaction(function(e) {
+ e.executeSql(query, [],
+ function(g, f) {
+ if (f.rows.length != 0) {
+ _constant.redirect('menu.html');
+ } else {
+ 
+ }
+ },
+ function(g, f) {
+ verifica_tabelas();
+ });
+ });
+ 
+ }
+ 
+ function debug(a, b) {
+ console.log(a + ': ' + ' Mesagem: ' + b + ' \n\n\n');
+ }
+ 
+ function populateDB() {
+ db.transaction(function(e) {
+ var c = 'DROP TABLE IF EXISTS usuarios';
+ e.executeSql(c, [],
+ function(f, e) {
+ debug("QUERY", 'DROP TABLE IF EXISTS usuarios');
+ },
+ function(f, e) {
+ debug("ERROR", e.message);
+ });
+ 
+ e.executeSql('CREATE TABLE IF NOT EXISTS usuarios ("id" INTEGER , "usuario" VARCHAR(50), "senha" VARCHAR(50))');
+ e.executeSql('INSERT INTO usuarios ("id", "usuario", "senha") VALUES ("1", "a" , "123")');
+ });
+ }
+ 
+ function errorCB(err) {
+ alert("Error processing SQL: " + err.code);
+ }
+ 
+ function successCB() {
+ alert("success!");
+ }
+ 
+ function onDeviceReady() {
+ checkConnection();
+ }
+ 
+ function checkConnection() {
+ 
+ }
+ 
+ function verifica_tabelas() {
+ var c = 'SELECT name FROM sqlite_master WHERE type="table" AND name="usuarios";';
+ db.transaction(function(e) {
+ e.executeSql(c, [],
+ function(g, f) {
+ //debug("QUERY", c);
+ //debug("TOTAL", f.rows.length);
+ if (f.rows.length != 0) {
+ //debug("SUCESSO", 'Redirecionando para o login.');
+ _configuracoes.verifica_usuarios();
+ //_constant.redirect('index.html');
+ } else {
+ alert(f.message);
+ populateDB();
+ }
+ },
+ function(g, f) {
+ alert(f.message);
+ //debug("QUERY", c);
+ //debug("ERROR", f.message);
+ //_configuracoes.verifica_tabelas();
+ });
+ });
+ }
+ */

@@ -11,7 +11,7 @@ $(document).on('pageinit', function() {
             $('#dialogPage').popup("open", {positionTo: '#senha'});
             $('#senha').focus();
         } else {
-            _constant.redirect('menu.html');
+            logar(this);
         }
     });
 
@@ -24,7 +24,6 @@ document.addEventListener("deviceready", onDeviceReady, false);
 // PhoneGap is ready
 //
 function onDeviceReady() {
-    alert("Banco");
     var db = window.openDatabase("taxi", "1.0", "PhoneGap Demo", 200000);
     db.transaction(populateDB, errorCB, successCB);
 }
@@ -49,32 +48,30 @@ function successCB() {
 }
 
 
+function logar(d) {
 
+    var usuario = $(d).closest("form").find("#usuario").val().toLowerCase();
+    var senha = $(d).closest("form").find("#senha").val().toLowerCase();
+    var query = 'SELECT * FROM usuarios WHERE usuario="' + usuario + '" AND senha="' + senha + '"';
+    var retorno = false;
+
+    db.transaction(function(e) {
+        e.executeSql(query, [],
+                function(g, f) {
+                    if (f.rows.length != 0) {
+                        _constant.redirect('menu.html');
+                    } else {
+                        alert("nao loga");
+                    }
+                },
+                function(g, f) {
+                    
+                });
+    });
+
+}
 
 /*
- function logar(d) {
- 
- var usuario = $(d).closest("form").find("#usuario").val().toLowerCase();
- var senha = $(d).closest("form").find("#senha").val().toLowerCase();
- var query = 'SELECT * FROM usuarios WHERE usuario="' + usuario + '" AND senha="' + senha + '"';
- var retorno = false;
- 
- db.transaction(function(e) {
- e.executeSql(query, [],
- function(g, f) {
- if (f.rows.length != 0) {
- _constant.redirect('menu.html');
- } else {
- 
- }
- },
- function(g, f) {
- verifica_tabelas();
- });
- });
- 
- }
- 
  function debug(a, b) {
  console.log(a + ': ' + ' Mesagem: ' + b + ' \n\n\n');
  }
